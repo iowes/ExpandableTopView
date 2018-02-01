@@ -12,6 +12,8 @@
 		E442F45F2022742000B73BF5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E442F45D2022742000B73BF5 /* Main.storyboard */; };
 		E442F4612022742000B73BF5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E442F4602022742000B73BF5 /* Assets.xcassets */; };
 		E442F4642022742000B73BF5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E442F4622022742000B73BF5 /* LaunchScreen.storyboard */; };
+		E442F46C20227F3900B73BF5 /* RoundedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E442F46B20227F3900B73BF5 /* RoundedView.swift */; };
+		E442F46E2022827800B73BF5 /* MyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E442F46D2022827700B73BF5 /* MyTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +24,8 @@
 		E442F4602022742000B73BF5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E442F4632022742000B73BF5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E442F4652022742000B73BF5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E442F46B20227F3900B73BF5 /* RoundedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedView.swift; sourceTree = "<group>"; };
+		E442F46D2022827700B73BF5 /* MyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +60,8 @@
 			children = (
 				E442F4592022742000B73BF5 /* AppDelegate.swift */,
 				E442F45B2022742000B73BF5 /* ViewController.swift */,
+				E442F46B20227F3900B73BF5 /* RoundedView.swift */,
+				E442F46D2022827700B73BF5 /* MyTableViewCell.swift */,
 				E442F45D2022742000B73BF5 /* Main.storyboard */,
 				E442F4602022742000B73BF5 /* Assets.xcassets */,
 				E442F4622022742000B73BF5 /* LaunchScreen.storyboard */,
@@ -137,6 +143,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				E442F45C2022742000B73BF5 /* ViewController.swift in Sources */,
+				E442F46E2022827800B73BF5 /* MyTableViewCell.swift in Sources */,
+				E442F46C20227F3900B73BF5 /* RoundedView.swift in Sources */,
 				E442F45A2022742000B73BF5 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
