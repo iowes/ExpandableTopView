@@ -21,22 +21,25 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nXH-Pd-F9K">
                                 <rect key="frame" x="0.0" y="80" width="375" height="120"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="vp8-CO-ki0">
+                                    <stackView opaque="NO" contentMode="scaleAspectFit" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="vp8-CO-ki0">
                                         <rect key="frame" x="20" y="15" width="335" height="65"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="Welcome" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KWW-pI-lKM">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="250" text="Welcome" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KWW-pI-lKM">
                                                 <rect key="frame" x="0.0" y="0.0" width="335" height="44"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="34"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="uma frase legal" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="330-fC-XpO">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="250" text="uma frase legal" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="330-fC-XpO">
                                                 <rect key="frame" x="0.0" y="44" width="335" height="21"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="65" id="yjD-HO-gsk"/>
+                                        </constraints>
                                     </stackView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.89566257335989841" green="0.50867385363627149" blue="0.17601521274180482" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -116,6 +119,7 @@
                             <constraint firstItem="KWB-ZP-3As" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="0AQ-oH-Qii"/>
                             <constraint firstItem="nXH-Pd-F9K" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="80" id="2U8-a9-fvc"/>
                             <constraint firstItem="KWB-ZP-3As" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="79N-i4-GoL"/>
+                            <constraint firstItem="F9p-uR-ckG" firstAttribute="top" secondItem="vp8-CO-ki0" secondAttribute="top" priority="750" id="8FM-Z9-siA"/>
                             <constraint firstItem="F9p-uR-ckG" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="AeW-Od-UuU"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="F9p-uR-ckG" secondAttribute="trailing" constant="20" id="LGs-la-8my"/>
                             <constraint firstItem="nXH-Pd-F9K" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="RaV-eO-xxD"/>
