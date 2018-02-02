@@ -15,16 +15,14 @@ class ViewController: UIViewController {
 	@IBOutlet weak var bigTitle: UILabel!
 	@IBOutlet weak var backButton: UIButton!
 	@IBOutlet weak var headerHeightConstraint: NSLayoutConstraint!
-	@IBOutlet weak var tableBottom: NSLayoutConstraint!
+	@IBOutlet weak var tableHeight: NSLayoutConstraint!
 	@IBOutlet weak var tableTop: NSLayoutConstraint!
 	
-	let numberOfItens = 20
-	let maxHeaderHeight : CGFloat = 180
-	let minHeaderHeight : CGFloat = 64
-	let maxTopPading : CGFloat = 0
-	let minTopPading : CGFloat = -30
-	let maxBottomPading : CGFloat = 30
-	let minBottomPading : CGFloat = -30
+	typealias AnimateRange = (min: CGFloat, max: CGFloat)
+	
+	let numberOfItens = 6
+	let headerHeight : AnimateRange = (0, 120)
+	var topPosition : AnimateRange = (-30, 90)
 	var previousScrollOffset: CGFloat = 0
 
 	override func viewDidLoad() {
@@ -32,75 +30,82 @@ class ViewController: UIViewController {
 		self.tableView.layer.cornerRadius = 20
 	}
 	
+	override func updateViewConstraints() {
+		super.updateViewConstraints()
+		tableHeight.constant = tableView.contentSize.height
+		topPosition.min = (UIScreen.main.bounds.height - headerHeight.max) - tableView.contentSize.height
+	}
+	
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-		self.headerHeightConstraint.constant = self.maxHeaderHeight
+		self.headerHeightConstraint.constant = self.headerHeight.max
 		updateHeader()
 	}
 	
 	func scrollViewDidScroll(_ scrollView: UIScrollView) {
 		
 		let scrollDiff = scrollView.contentOffset.y - self.previousScrollOffset
-		
 		let absoluteTop: CGFloat = 0;
 		let absoluteBottom: CGFloat = scrollView.contentSize.height - scrollView.frame.size.height;
 		
-		let isScrollingDown = scrollDiff > 0 && scrollView.contentOffset.y > absoluteTop
-		let isScrollingUp = scrollDiff < 0 && scrollView.contentOffset.y < absoluteBottom
-		
-		if canAnimateHeader(scrollView) {
-			
-			// Calculate new header height
-			var newHeight = self.headerHeightConstraint.constant
-			var newPaddingTop = self.tableTop.constant
-			var newPaddingBottom = self.tableBottom.constant
+		let isScrollingUp = scrollDiff > 0 && scrollView.contentOffset.y > absoluteTop
+		let isScrollingDown = scrollDiff < 0 && scrollView.contentOffset.y < absoluteBottom
 
-			if isScrollingDown {
-				newHeight = max(self.minHeaderHeight, self.headerHeightConstraint.constant - abs(scrollDiff))
-				newPaddingTop = min(self.maxTopPading, self.tableTop.constant + abs(scrollDiff))
-				newPaddingBottom = max(self.minBottomPading, self.tableBottom.constant - abs(scrollDiff))
-			} else if isScrollingUp {
-				newHeight = min(self.maxHeaderHeight * 2, self.headerHeightConstraint.constant + abs(scrollDiff))
-				newPaddingTop = max(self.minTopPading, self.tableTop.constant - abs(scrollDiff))
-				newPaddingBottom = min(self.maxBottomPading, self.tableBottom.constant + abs(scrollDiff))
-			}
+		// Calculate new header height
+		var newHeight = self.headerHeightConstraint.constant
+		var newTopPosition = self.tableTop.constant
+		
+		print("newtop: \(newTopPosition)")
+		print("newHeight: \(newHeight)")
+
+		if isScrollingUp {
+			newHeight = max(self.headerHeight.min, self.headerHeightConstraint.constant - abs(scrollDiff * 1.55))
+			newTopPosition = max(self.topPosition.min, self.tableTop.constant - abs(scrollDiff))
 			
-			// Header needs to animate
-			if newHeight != self.headerHeightConstraint.constant {
-				self.headerHeightConstraint.constant = newHeight
-				self.tableTop.constant = newPaddingTop
-				self.tableBottom.constant = newPaddingBottom
-				self.updateHeader()
-				self.setScrollPosition(self.previousScrollOffset)
+		} else if isScrollingDown {
+			newTopPosition = min(self.topPosition.max, self.tableTop.constant +  abs(scrollDiff))
+			if newTopPosition > 0 {
+				newHeight = min(self.headerHeight.max, self.headerHeightConstraint.constant + abs(scrollDiff * 0.25))
+			}else{
+				newHeight = self.headerHeight.min
 			}
-			
-			self.previousScrollOffset = scrollView.contentOffset.y
 		}
 		
-	}
-	
-	func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-		self.scrollViewDidStopScrolling()
-	}
-	
-	func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-		self.scrollViewDidStopScrolling()
-	}
-	
-	func scrollViewDidStopScrolling() {
-		let range = self.maxHeaderHeight - self.minHeaderHeight
-		let midPoint = self.minHeaderHeight + (range / 2)
-		
-		if self.headerHeightConstraint.constant > midPoint {
-			self.expandHeader()
-		} else {
-			self.collapseHeader()
+		// Header needs to animate
+		if newHeight != self.headerHeightConstraint.constant {
+			self.headerHeightConstraint.constant = newHeight
+			self.updateHeader()
+//			self.setScrollPosition(self.previousScrollOffset)
 		}
+		
+		if newTopPosition != self.tableTop.constant{
+			self.tableTop.constant = newTopPosition
+		}
+//		self.previousScrollOffset = scrollView.contentOffset.y
 	}
+//
+//	func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+//		self.scrollViewDidStopScrolling()
+//	}
+//
+//	func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+//		self.scrollViewDidStopScrolling()
+//	}
+//
+//	func scrollViewDidStopScrolling() {
+//		let range = self.headerHeight.max - self.headerHeight.min
+//		let midPoint = self.headerHeight.min + (range / 2)
+//
+//		if self.headerHeightConstraint.constant > midPoint {
+//			self.expandHeader()
+//		} else {
+//			self.collapseHeader()
+//		}
+//	}
 	
 	func canAnimateHeader(_ scrollView: UIScrollView) -> Bool {
 		// Calculate the size of the scrollView when header is collapsed
-		let scrollViewMaxHeight = scrollView.frame.height + self.headerHeightConstraint.constant - minHeaderHeight
+		let scrollViewMaxHeight = scrollView.frame.height + self.headerHeightConstraint.constant - headerHeight.min
 		
 		// Make sure that when header is collapsed, there is still room to scroll
 		return scrollView.contentSize.height > scrollViewMaxHeight
@@ -108,19 +113,17 @@ class ViewController: UIViewController {
 	
 	func collapseHeader() {
 		self.view.layoutIfNeeded()
-		UIView.animate(withDuration: 0.15, animations: {
-			self.headerHeightConstraint.constant = self.minHeaderHeight
-			self.updateHeader()
-			self.view.layoutIfNeeded()
+		UIView.animate(withDuration: 0.25, animations: {
+			self.headerHeightConstraint.constant = self.headerHeight.min
+//			self.updateHeader()
 		})
 	}
 	
 	func expandHeader() {
 		self.view.layoutIfNeeded()
-		UIView.animate(withDuration: 0.15, animations: {
-			self.headerHeightConstraint.constant = self.maxHeaderHeight
-			self.updateHeader()
-			self.view.layoutIfNeeded()
+		UIView.animate(withDuration: 0.25, animations: {
+			self.headerHeightConstraint.constant = self.headerHeight.max
+//			self.updateHeader()
 		})
 	}
 	
@@ -129,8 +132,8 @@ class ViewController: UIViewController {
 	}
 	
 	func updateHeader() {
-		let range = self.maxHeaderHeight - self.minHeaderHeight
-		let openAmount = self.headerHeightConstraint.constant - self.minHeaderHeight
+		let range = self.headerHeight.max - self.headerHeight.min
+		let openAmount = self.headerHeightConstraint.constant - self.headerHeight.min
 		let percentage = openAmount / range
 		
 		bigTitle.alpha = percentage
